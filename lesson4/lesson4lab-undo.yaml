@@ -1,0 +1,15 @@
+---
+- name: stop & remove httpd
+  hosts: ansible2.example.com
+  tasks:
+  - name: remove the index file
+    file:
+      path: /var/www/html/index.html
+      state: absent
+  - name: remove httpd & firewalld services
+    yum:
+      name:
+      - httpd
+      - firewalld
+      state: absent
+

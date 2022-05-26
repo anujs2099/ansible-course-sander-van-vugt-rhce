@@ -1,0 +1,20 @@
+---
+- name: deploy vsftpd
+  hosts: ansible2.example.com
+  tasks:
+  - name: install vsftpd
+    yum: 
+      name: vsftpd
+      state: present
+  - name: enable vsftpd
+   service: 
+      name: vsftpd
+      enabled: yes
+  - name: create readme file
+    copy:
+      content: 'free downloads for everybody'
+      dest: /var/ftp/pub/README
+      force: no
+      mode: 0444
+...
+

@@ -1,0 +1,39 @@
+---
+- name: install & start httpd
+  hosts: ansible2.example.com
+  tasks:
+  - name: install httpd & firewalld
+    yum:
+      name:
+      - httpd
+      - firewalld
+      state: present
+  - name: Start & enable httpd
+    service:
+      name: httpd
+      state: started
+      enabled: yes
+  - name: Start & enable firewalld
+    service:
+      name: firewalld
+      state: started
+      enabled: yes
+  - name: open firewalld to allow http service
+    firewalld:
+      service: http
+      permanent: yes
+      immediate: yes
+      state: enabled
+  - name: open firewalld to allow https service
+    firewalld:
+      service: https
+      permanent: yes
+      immediate: yes
+      state: enabled
+  - name: create a custom index.html
+    copy:
+      content: 'hello world'
+      dest: /var/www/html/index.html
+
+
+            
