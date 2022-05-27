@@ -1,0 +1,6 @@
+[lamp]
+ansible1.example.com
+
+[db]
+ansible2.example.com
+

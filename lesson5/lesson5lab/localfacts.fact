@@ -1,0 +1,3 @@
+[localfacts]
+package = samba
+service = smb

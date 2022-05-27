@@ -1,0 +1,34 @@
+---
+- name: install local facts
+  hosts: all 
+  tasks:
+  - name: Create /etc/ansible/facts.d if it does not exist
+    file:
+      path: /etc/ansible/facts.d
+      state: directory
+  - name: copy localfacts.fact to /etc/ansible/facts.d/
+    copy:
+      src: localfacts.fact
+      dest: /etc/ansible/facts.d/
+- name: install & enable smbd service
+  hosts: all
+  tasks:
+  - name: show ansible_local facts
+    debug:
+      var: ansible_facts.ansible_local
+  - name: install samba package
+    yum:
+      name: "{{ ansible_facts.ansible_local.localfacts.localfacts.package }}"
+      state: present
+  - name: enable & start smb service
+    service: 
+      name: "{{ ansible_facts.ansible_local.localfacts.localfacts.service }}"
+      state: started
+      enabled: yes
+  - name: save the output in a variable
+    shell: 
+      cmd: systemctl status smb
+    register: result
+  - name: display if smb is running or not
+    debug:
+      var: result.stdout_lines

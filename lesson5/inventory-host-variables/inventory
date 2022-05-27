@@ -1,0 +1,12 @@
+
+# Defining host & group variables through inventory
+
+[web]
+ansible1.example.com web_package=httpd
+
+[db]
+ansible2.example.com
+
+[db:vars]
+web_package=httpd
+
